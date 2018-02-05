@@ -32,11 +32,11 @@ public class Product {
 	private State leclerc;
 	
 	public Product(String[] dataList) {
+		barcode = Integer.parseInt(dataList[4]);
 		name = dataList[0];
 		vegan = string2State(dataList[1]);
 		vegetarian = string2State(dataList[2]); 
 		palmOil = string2State(dataList[3]);
-		barcode = Integer.parseInt(dataList[4]);
 		meal = dataList[5];
 		subMeal = dataList[6];
 		kind = dataList[7];
@@ -58,11 +58,11 @@ public class Product {
 	}
 	
 	public Product() {
+		barcode = 0;
 		name = "";
 		vegan = State.maybe;
 		vegetarian = State.maybe; 
 		palmOil = State.maybe;
-		barcode = 0;
 		meal = "";
 		subMeal = "";
 		kind = "";
@@ -94,8 +94,8 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return "Product [name=" + name + ", vegan=" + vegan + ", vegetarian=" + vegetarian + ", palmOil=" + palmOil
-				+ ", barcode=" + barcode + ", meal=" + meal + ", subMeal=" + subMeal + ", kind=" + kind + ", subKind="
+		return "Product [barcode=" + barcode + ", name=" + name + ", vegan=" + vegan + ", vegetarian=" + vegetarian
+				+ ", palmOil=" + palmOil + ", meal=" + meal + ", subMeal=" + subMeal + ", kind=" + kind + ", subKind="
 				+ subKind + ", tesco=" + tesco + ", kaufland=" + kaufland + ", carrefour=" + carrefour + ", lidl="
 				+ lidl + ", biedronka=" + biedronka + ", fresh=" + fresh + ", zabka=" + zabka + ", netto=" + netto
 				+ ", mila=" + mila + ", piotrPawel=" + piotrPawel + ", lewiatan=" + lewiatan + ", malpkaExpress="
