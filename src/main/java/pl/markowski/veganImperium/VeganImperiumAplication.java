@@ -1,11 +1,14 @@
 package pl.markowski.veganImperium;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,16 +16,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pl.markowski.veganImperium.model.ProductView;
+import pl.markowski.veganImperium.storage.Product;
+import pl.markowski.veganImperium.storage.ProductRepository;
+
 @SpringBootApplication
 @Controller
 @RequestMapping("/")
 public class VeganImperiumAplication {
 	
 	@Autowired
+	ProductRepository productRepository;
+	
+	@Autowired
 	FileUploadHandler fileUploadHandler;
 	
 	@GetMapping
-	String home() {
+	String home(Model model) {
+		List<Product> productList = (List<Product>) productRepository.findAll();
+		List<ProductView> productViewList = productList.stream().map(p ->{return new ProductView(p);}).collect(Collectors.toList());
+		model.addAttribute("list", productViewList);
 		return "index";
 	}
 	

@@ -108,19 +108,19 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public State isVegan() {
+	public State getVegan() {
 		return vegan;
 	}
 	public void setVegan(State vegan) {
 		this.vegan = vegan;
 	}
-	public State isVegetarian() {
+	public State getVegetarian() {
 		return vegetarian;
 	}
 	public void setVegetarian(State vegetarian) {
 		this.vegetarian = vegetarian;
 	}
-	public State isPalmOil() {
+	public State getPalmOil() {
 		return palmOil;
 	}
 	public void setPalmOil(State palmOil) {
@@ -156,80 +156,80 @@ public class Product {
 	public void setSubKind(String subKind) {
 		this.subKind = subKind;
 	}
-	public State isTesco() {
+	public State getTesco() {
 		return tesco;
 	}
 	public void setTesco(State tesco) {
 		this.tesco = tesco;
 	}
-	public State isKaufland() {
+	public State getKaufland() {
 		return kaufland;
 	}
 	public void setKaufland(State kaufland) {
 		this.kaufland = kaufland;
 	}
-	public State isCarrefour() {
+	public State getCarrefour() {
 		return carrefour;
 	}
 	public void setCarrefour(State carrefour) {
 		this.carrefour = carrefour;
 	}
-	public State isLidl() {
+	public State getLidl() {
 		return lidl;
 	}
 	public void setLidl(State lidl) {
 		this.lidl = lidl;
 	}
-	public State isBiedronka() {
+	public State getBiedronka() {
 		return biedronka;
 	}
 	public void setBiedronka(State biedronka) {
 		this.biedronka = biedronka;
 	}
-	public State isFresh() {
+	public State getFresh() {
 		return fresh;
 	}
 	public void setFresh(State fresh) {
 		this.fresh = fresh;
 	}
-	public State isZabka() {
+	public State getZabka() {
 		return zabka;
 	}
 	public void setZabka(State zabka) {
 		this.zabka = zabka;
 	}
-	public State isNetto() {
+	public State getNetto() {
 		return netto;
 	}
 	public void setNetto(State netto) {
 		this.netto = netto;
 	}
-	public State isMila() {
+	public State getMila() {
 		return mila;
 	}
 	public void setMila(State mila) {
 		this.mila = mila;
 	}
-	public State isPiotrPawel() {
+	public State getPiotrPawel() {
 		return piotrPawel;
 	}
 	public void setPiotrPawel(State piotrPawel) {
 		this.piotrPawel = piotrPawel;
 	}
-	public State isLewiatan() {
+	public State getLewiatan() {
 		return lewiatan;
 	}
 	public void setLewiatan(State lewiatan) {
 		this.lewiatan = lewiatan;
 	}
-	public State isMalpkaExpress() {
+	public State getMalpkaExpress() {
 		return malpkaExpress;
 	}
 	public void setMalpkaExpress(State malpkaExpress) {
 		this.malpkaExpress = malpkaExpress;
 	}
 
-	public State isSpolem() {
+	public State getSpolem() {
 		return spolem;
 	}
 
@@ -237,7 +237,7 @@ public class Product {
 		this.spolem = spolem;
 	}
 
-	public State isLeclerc() {
+	public State getLeclerc() {
 		return leclerc;
 	}
 

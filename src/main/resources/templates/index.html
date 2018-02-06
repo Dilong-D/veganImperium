@@ -1,10 +1,35 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Home</title>
 </head>
 <body>
-    <p>Hello Word</p>
+<h1>
+    Show table 
+</h1>
+
+<table class="table table-striped">
+                <thead>
+                 <tr>
+                    <th>Name</th>
+                    <th>Vegan</th>
+                    <th>Vegetarian</th>
+                    <th>Palm Oil</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    <tr th:each="product : ${list}">
+						<td th:text="${product.name}">Text ...</td>
+						<td th:text="${product.vegan}">Text ...</td>
+						<td th:text="${product.vegetarian}">Text ...</td>
+						<td th:text="${product.palmOil}">Text ...</td>
+                    </tr>   
+
+                </tbody>
+</table>
 </body>
 </html>
