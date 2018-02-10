@@ -2,6 +2,7 @@ package pl.markowski.veganImperium;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,36 +25,52 @@ import pl.markowski.veganImperium.storage.ProductRepository;
 @Controller
 @RequestMapping("/")
 public class VeganImperiumAplication {
-	
+
 	@Autowired
 	ProductRepository productRepository;
-	
+
 	@Autowired
 	FileUploadHandler fileUploadHandler;
-	
+
+	@Autowired
+	FiltersHandler filtersHandler;
+
 	@GetMapping
 	String home(Model model) {
 		List<Product> productList = (List<Product>) productRepository.findAll();
-		List<ProductView> productViewList = productList.stream().map(p ->{return new ProductView(p);}).collect(Collectors.toList());
+		List<ProductView> productViewList = productList.stream().map(p -> {
+			return new ProductView(p);
+		}).collect(Collectors.toList());
 		model.addAttribute("list", productViewList);
 		return "index";
 	}
-	
+
+	@GetMapping("/products")
+	String uploadDataFilter(Model model, @RequestParam Map<String, String> queryMap) {
+		List<Product> productList = (List<Product>) productRepository.findAll();
+		List<Product> filteredList = filtersHandler.filterProductsList(queryMap, productList);
+		
+		List<ProductView> productViewList = filteredList.stream().map(p ->{return new ProductView(p);}).collect(Collectors.toList());
+		model.addAttribute("list",productViewList);
+		model.addAllAttributes(queryMap);
+		return "index";
+	}
+
 	@GetMapping("/uploadData")
 	String uploadData() {
 		return "uploadForm";
 	}
-	
+
 	@PostMapping("/uploadData")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file,
-            RedirectAttributes redirectAttributes) throws IOException {
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
-        fileUploadHandler.updateDB(file);
-        
-        return "redirect:/uploadData";
-    }
-	
+	public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes)
+			throws IOException {
+		redirectAttributes.addFlashAttribute("message",
+				"You successfully uploaded " + file.getOriginalFilename() + "!");
+		fileUploadHandler.updateDB(file);
+
+		return "redirect:/uploadData";
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(VeganImperiumAplication.class, args);
 	}

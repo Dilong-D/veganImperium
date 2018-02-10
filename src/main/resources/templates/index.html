@@ -4,12 +4,23 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Home</title>
+    <title>Vegankie imperium</title>
 </head>
 <body>
 <h1>
-    Show table 
+    Vegankie imperium
 </h1>
+
+<form th:action="@{/products}" method="get">
+    <input type="text" th:name="name" th:placeholder="Nazwa" />
+    <input type="radio" th:name="vegan" value="yes" />
+    <input type="radio" th:name="vegetarian" value="yes" />
+    <input type="radio" th:name="palmOil" value="yes" />
+    <div class="clearfix">
+        <button type="submit">Wyszukaj</button>
+    </div>
+</form>
+
 
 <table class="table table-striped">
                 <thead>
