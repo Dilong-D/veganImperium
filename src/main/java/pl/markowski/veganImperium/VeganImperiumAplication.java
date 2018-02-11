@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pl.markowski.veganImperium.model.ProductView;
 import pl.markowski.veganImperium.storage.Product;
-import pl.markowski.veganImperium.storage.ProductRepository;
+import pl.markowski.veganImperium.storage.ProductProvider;
 
 @SpringBootApplication
 @Controller
@@ -27,28 +27,17 @@ import pl.markowski.veganImperium.storage.ProductRepository;
 public class VeganImperiumAplication {
 
 	@Autowired
-	ProductRepository productRepository;
-
-	@Autowired
-	FileUploadHandler fileUploadHandler;
-
-	@Autowired
-	FiltersHandler filtersHandler;
+	ProductProvider productProvider; 
 
 	@GetMapping
 	String home(Model model) {
-		List<Product> productList = (List<Product>) productRepository.findAll();
-		List<ProductView> productViewList = productList.stream().map(p -> {
-			return new ProductView(p);
-		}).collect(Collectors.toList());
-		model.addAttribute("list", productViewList);
 		return "index";
 	}
 
 	@GetMapping("/products")
 	String uploadDataFilter(Model model, @RequestParam Map<String, String> queryMap) {
-		List<Product> productList = (List<Product>) productRepository.findAll();
-		List<Product> filteredList = filtersHandler.filterProductsList(queryMap, productList);
+		
+		List<Product> filteredList = productProvider.getProductsList(queryMap);
 		
 		List<ProductView> productViewList = filteredList.stream().map(p ->{return new ProductView(p);}).collect(Collectors.toList());
 		model.addAttribute("list",productViewList);
@@ -66,7 +55,7 @@ public class VeganImperiumAplication {
 			throws IOException {
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
-		fileUploadHandler.updateDB(file);
+		productProvider.updateAll(file);
 
 		return "redirect:/uploadData";
 	}

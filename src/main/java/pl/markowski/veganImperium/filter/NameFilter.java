@@ -10,7 +10,7 @@ public class NameFilter extends FilterAbstract<String>{
 
 	@Override
 	public boolean check(Product p) {
-		if(p.getName().contains(value))
+		if(p.getName().toLowerCase().contains(value.toLowerCase()))
 			return true;
 		return false;
 	}
