@@ -1,4 +1,4 @@
-package pl.markowski.veganImperium.filter;
+package pl.markowski.veganImperium.logic.filter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +24,10 @@ public class FilterFactory {
 				break;
 			case "vegan":
 				if (entry.getValue() != null) {
+					System.out.println(entry.getValue());
 					try {
-						State value = State.valueOf(entry.getValue());	
-						filtersList.add(new VeganFilter(value));
+						if (entry.getValue().equals("on"))
+							filtersList.add(new VeganFilter(State.yes));
 					}
 					catch(IllegalArgumentException e){
 						//TODO logger
@@ -36,8 +37,8 @@ public class FilterFactory {
 			case "vegetarian":
 				if (entry.getValue() != null) {
 					try {
-						State value = State.valueOf(entry.getValue());	
-						filtersList.add(new VegetarianFilter(value));
+						if (entry.getValue().equals("on"))
+							filtersList.add(new VegetarianFilter(State.yes));
 					}
 					catch(IllegalArgumentException e){
 						//TODO logger
@@ -47,8 +48,8 @@ public class FilterFactory {
 			case "palmOil":
 				if (entry.getValue() != null) {
 					try {
-						State value = State.valueOf(entry.getValue());	
-						filtersList.add(new PalmOilFilter(value));
+						if (entry.getValue().equals("on"))
+							filtersList.add(new PalmOilFilter(State.yes));
 					}
 					catch(IllegalArgumentException e){
 						//TODO logger

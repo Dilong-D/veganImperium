@@ -1,4 +1,4 @@
-package pl.markowski.veganImperium;
+package pl.markowski.veganImperium.logic;
 
 import java.util.List;
 import java.util.Map;
@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import pl.markowski.veganImperium.filter.FilterAbstract;
-import pl.markowski.veganImperium.filter.FilterChecker;
-import pl.markowski.veganImperium.filter.FilterFactory;
+import pl.markowski.veganImperium.logic.filter.FilterAbstract;
+import pl.markowski.veganImperium.logic.filter.FilterChecker;
+import pl.markowski.veganImperium.logic.filter.FilterFactory;
 import pl.markowski.veganImperium.storage.Product;
 
 @Component

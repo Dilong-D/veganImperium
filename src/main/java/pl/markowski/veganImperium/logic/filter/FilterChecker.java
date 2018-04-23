@@ -1,4 +1,4 @@
-package pl.markowski.veganImperium.filter;
+package pl.markowski.veganImperium.logic.filter;
 
 import java.util.List;
 import java.util.stream.Stream;
