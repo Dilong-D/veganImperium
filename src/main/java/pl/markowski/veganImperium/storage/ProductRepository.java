@@ -4,8 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProductRepository extends CrudRepository<Product, Long>{
 
-	Product findByVegan(boolean vegan);
-	Product findByVegetarian(boolean vegetarian);
-	Product findByPalmOil(boolean palmOil);
+	Product findByVegan(State vegan);
+	Product findByVegetarian(State vegetarian);
+	Product findByPalmOil(State palmOil);
 	Product findByBarcode(int barcode);
 }
