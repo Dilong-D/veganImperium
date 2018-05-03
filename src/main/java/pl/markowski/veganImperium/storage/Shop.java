@@ -1,16 +1,16 @@
 package pl.markowski.veganImperium.storage;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "meal", uniqueConstraints={@UniqueConstraint(columnNames={"id"})})
-public class Meal{
+@Table(name = "shop")
+public class Shop{
 
 	@Id
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
 	

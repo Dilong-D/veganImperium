@@ -1,4 +1,4 @@
-package pl.markowski.veganImperium.security;
+package pl.markowski.veganImperium.logic;
 
 import java.util.List;
 
@@ -18,8 +18,13 @@ public class UserService{
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public void save(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    public void save(User user, boolean ecryptPass) {
+    	if (ecryptPass)
+    		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+    
+    public void update(User user) {
         userRepository.save(user);
     }
     
@@ -29,5 +34,13 @@ public class UserService{
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+    
+    public User findById(int id) {
+        return userRepository.findById(id);
+    }
+    
+    public void deleteById(int id) {
+    	userRepository.deleteById(id);
     }
 }

@@ -10,35 +10,42 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import pl.markowski.veganImperium.logic.UserService;
+import pl.markowski.veganImperium.storage.User;
+
 @Service
-public class SecurityService{
-    @Autowired
-    private AuthenticationManager authenticationManager;
+public class SecurityService {
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
+	@Autowired
+	private UserService userService; 
+	
+	private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
-    
-    public String findLoggedInUsername() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if (userDetails instanceof UserDetails) {
-            return ((UserDetails)userDetails).getUsername();
-        }
+	public User findLoggedInUsername() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = null;
+		if (principal instanceof UserDetails) {
+			String username = ((UserDetails) principal).getUsername();
+			user = userService.findByUsername(username);
+		}
+		return user;
+	}
 
-        return null;
-    }
+	public void autologin(String username, String password) {
+		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+				userDetails, password, userDetails.getAuthorities());
 
-    public void autologin(String username, String password) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
-        authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            logger.debug(String.format("Auto login %s successfully!", username));
-        }
-    }
+		if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+			SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			logger.debug(String.format("Auto login %s successfully!", username));
+		}
+	}
 }

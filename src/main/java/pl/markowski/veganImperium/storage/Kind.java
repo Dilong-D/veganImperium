@@ -6,8 +6,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "meal", uniqueConstraints={@UniqueConstraint(columnNames={"id"})})
-public class Meal{
+@Table(name = "kind", uniqueConstraints={@UniqueConstraint(columnNames={"id"})})
+public class Kind{
 
 	@Id
 	@Column(name="id")
