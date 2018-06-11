@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface AvalibilityRepository extends CrudRepository<Avalibility, Integer> {
 
+	Avalibility findById(int id);
+	
 	List<Avalibility> findByProductId(int productId);
 
 	@Transactional

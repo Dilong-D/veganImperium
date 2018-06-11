@@ -2,15 +2,14 @@ package pl.markowski.veganImperium.model;
 
 import java.util.List;
 
-import pl.markowski.veganImperium.storage.Avalibility;
 import pl.markowski.veganImperium.storage.Product;
 
 public class AjaxProductResponseBody {
-
+	
 	private String msg;
 	private Product result;
-	private List<Avalibility> avalibilityResult;
-
+	private List<AvalibilityView> avalibilityViewResult;
+	
 	public String getMsg() {
 		return msg;
 	}
@@ -27,11 +26,11 @@ public class AjaxProductResponseBody {
 		this.result = result;
 	}
 
-	public List<Avalibility> getAvalibilityResult() {
-		return avalibilityResult;
+	public List<AvalibilityView> getAvalibilityViewResult() {
+		return avalibilityViewResult;
 	}
-
-	public void setAvalibilityResult(List<Avalibility> avalibilityResult) {
-		this.avalibilityResult = avalibilityResult;
+	
+	public void setAvalibilityViewResults (List<AvalibilityView> list) {
+		this.avalibilityViewResult = list;
 	}
 }

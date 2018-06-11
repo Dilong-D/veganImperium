@@ -37,7 +37,7 @@
 			</div>
 		</c:if>
 
-		<form method="get" action="products">
+		<form method="get" action="products" id="main-search">
 			<div class="form-group row">
 				<div class="col-sm-6">
 					<input type="text" class="form-control" name="name"
@@ -91,60 +91,40 @@
 
 
 	<script>
-		$('#editProdModal')
-				.on(
-						'show.bs.modal',
-						function(event) {
-							var button = $(event.relatedTarget);
-							var barcode = button.data('barcode');
-							var name = button.data('name');
-							var modal = $(this)
-							var post_url = "product/" + barcode;
-							var request_method = "post";
-
-							$
-									.ajax({
-										url : post_url,
-										type : request_method,
-									})
-									.done(
-											function(response) {
-												var product = response.result;
-												modal.find('.modal-body #barcode')
-														.val(product.barcode);
-												modal.find('.modal-body #productId')
-														.val(product.barcode);
-												modal.find('.modal-body #name')
-														.val(product.name);
-												modal.find('.modal-body #vegan')
-														.val(product.vegan);
-												modal.find('.modal-body #vegetarian')
-														.val(product.vegetarian);
-												modal.find('.modal-body #palmOil')
-														.val(product.palmOil);
-												modal.find('.modal-body #kindId')
-														.val(product.kindId);
-												modal.find('.modal-body #mealId')
-														.val(product.mealId);
-												var avalibility = response.avalibilityResult;
-												avalibility
-														.forEach(function(aval) {
-															$('#avalibilityDiv')
-																	.append(
-																			'<form action="avalibility/'+aval.id+'/delete" method="POST"><button class="btn btn-danger" type="submit">Usuń '
-																					+ aval.shopId
-																					+ '</button></form>');
-														});
-
-											});
-						})
-		/* $(function() {
-			$("#queryField").autocomplete({
+		$('#editProdModal').on('show.bs.modal',	function(event) {
+			var button = $(event.relatedTarget);
+			var barcode = button.data('barcode');
+			var name = button.data('name');
+			var modal = $(this)
+			var post_url = "product/" + barcode;
+			var request_method = "post";
+			$.ajax({	url : post_url,
+				type : request_method,
+				}).done(function(response) {
+					var product = response.result;
+					modal.find('.modal-body #barcode').val(product.barcode);
+					modal.find('.modal-body #productId').val(product.barcode);
+					modal.find('.modal-body #name').val(product.name);
+					modal.find('.modal-body #vegan').val(product.vegan);
+					modal.find('.modal-body #vegetarian').val(product.vegetarian);
+					modal.find('.modal-body #palmOil').val(product.palmOil);
+					modal.find('.modal-body #kindId').val(product.kindId);
+					modal.find('.modal-body #mealId').val(product.mealId);
+					var avalibility = response.avalibilityViewResult;
+					avalibility.forEach(function(aval) {
+						$('#avalibilityDiv')
+							.append('<form action="avalibility/'+aval.id+'/delete" method="POST"><button class="btn btn-danger" type="submit">Usuń '
+									+ aval.shopName + '</button></form>');
+					});
+				});
+		})
+/* 		$(function() {
+			$("#name").autocomplete({
 				source : 'autocomplete',
 				minLenght : 1,
 				select : function(event, ui) {
-					document.getElementById('queryField').value = ui.item.value;
-					document.getElementById('searchForm').submit();
+					document.getElementById('#name').value = ui.item.value;
+					document.getElementById('#main-search').submit();
 				}
 			});
 		}); */

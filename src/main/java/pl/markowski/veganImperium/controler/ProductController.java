@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pl.markowski.veganImperium.logic.AvalibilityService;
 import pl.markowski.veganImperium.logic.AvalibilityValidator;
 import pl.markowski.veganImperium.logic.EditProductValidator;
 import pl.markowski.veganImperium.logic.ProductService;
@@ -29,6 +30,7 @@ import pl.markowski.veganImperium.storage.AvalibilityRepository;
 import pl.markowski.veganImperium.storage.KindRepository;
 import pl.markowski.veganImperium.storage.MealRepository;
 import pl.markowski.veganImperium.storage.Product;
+import pl.markowski.veganImperium.storage.ShopRepository;
 
 @Controller
 public class ProductController {
@@ -58,7 +60,13 @@ public class ProductController {
 	AvalibilityRepository avalibilityRepository;
 
 	@Autowired
+	AvalibilityService avalibilityService;
+	
+	@Autowired
 	AvalibilityValidator avalibilityValidator; 
+	
+	@Autowired
+	ShopRepository shopRepository;
 	
 	@GetMapping("/")
 	public String home(Model model, @RequestParam Map<String, String> queryMap) {
@@ -79,7 +87,7 @@ public class ProductController {
 		AjaxProductResponseBody result = new AjaxProductResponseBody();
 		Product product = productService.getProductByBarcode(barcode);
 		result.setResult(product);
-		result.setAvalibilityResult(avalibilityRepository.findByProductId(product.getBarcode()));
+		result.setAvalibilityViewResults(avalibilityService.getAvalibilityView(barcode));
 		result.setMsg("Founded product " + product.getName() + ".");
 		return ResponseEntity.ok(result);
 	}
@@ -153,16 +161,21 @@ public class ProductController {
 			redir.addFlashAttribute("errorMessage", errorMsq);
 			return "redirect:/products";
 		}
+		String prodName = productService.getProductByBarcode(aval.getProductId()).getName();
+		String shopName = shopRepository.findByIdReturnName(aval.getShopId());
 		avalibilityRepository.save(aval);
-		redir.addFlashAttribute("message", "Dostępność produktu w sklepie "+aval.getShopId()+" dodana.");
+		redir.addFlashAttribute("message", "Dostępność produktu "+ prodName +" w sklepie "+shopName+ " została dodana.");
 
 		return "redirect:/products";
 	}
 	
 	@PostMapping("/avalibility/{id}/delete")
 	public String deleteAvalibility(@PathVariable("id") int id, RedirectAttributes redir) {
+		Avalibility aval = avalibilityRepository.findById(id);
+		String prodName = productService.getProductByBarcode(aval.getProductId()).getName();
+		String shopName = shopRepository.findByIdReturnName(aval.getShopId());
 		avalibilityRepository.deleteById(id);
-    	redir.addFlashAttribute("message","Product "+ id +" został usunięty.");
+    	redir.addFlashAttribute("message","Dostępność produktu "+ prodName +" w sklepie "+shopName+ " została usunięta.");
         return "redirect:/products";
 	}
 	
