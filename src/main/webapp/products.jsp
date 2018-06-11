@@ -67,7 +67,7 @@
 						</button>
 						<ul class="dropdown-menu">
 							<c:forEach items="${shopsList}" var="shop" varStatus="status">
-								<li><input type="checkbox" name="shop-${shop.id}" />
+								<li><input type="checkbox" name="shop" value="${shop.id}" />
 									${shop.name}</li>
 							</c:forEach>
 						</ul>

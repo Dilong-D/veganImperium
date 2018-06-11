@@ -55,6 +55,11 @@ public class FiltersHandler {
 						filteredProducts.add(p);
 				});
 			break;
+		case "shop":
+			System.out.println(filterName);
+			System.out.println(filterVal);
+			return products;
+			
 		default:
 			return products;
 		}
